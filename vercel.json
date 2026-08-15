@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/memories.js": {
-      "maxDuration": 10
-    }
-  }
-}
