@@ -85,7 +85,7 @@
         async function loadTimelineFromDatabase() {
             try {
                 // Fetch data from your local Node.js backend
-                const response = await fetch('https://mylove.vercel.app/api/memories');
+                const response = await fetch('/api/memories')
                 const memories = await response.json();
                 
                 const container = document.getElementById('timeline-container');
