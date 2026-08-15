@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/memories.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/memories", "dest": "/api/memories.js" }
+  ]
+}

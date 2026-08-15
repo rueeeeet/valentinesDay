@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey🧿💕✨</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="container">
+        <h1>Happy Valentine's Day! 💕</h1>  
+        <div class="heart-icon">❤️</div>
+        
+        <div class="message-box">
+            <h2>To My Beautiful Love, Rashiii🌹💕</h2>
+            <h2>I Love You Meri Bhonduuuuu Babyy💕✨</h2>
+            <h2>I Love You Meri Gullllluuuuuu💕✨</h2>
+            <p>Madam jii wapas aagyi na dekhne😅😂😚✨</p>
+            <p>In this vast universe, among billions of people, fate chose you for me… our souls met, and we fell in love.💕✨</p>
+            <p>From my first thought at dawn to my last before sleep 🌙, it is always you.💫</p>
+            <p>Thank you for being the reason I believe in forever.💖🌟</p>
+            <p style="font-weight: 600; color: #d4145a; font-size: clamp(1.1rem, 3.5vw, 1.4rem); margin-top: 20px;">I love you more than you would ever know, and <br> I don't think I will ever be able to express how much I love you. ❤️✨</p>
+
+            <button class="love-button" onclick="showLoveMessage()">Click To Open My Heart 💖</button>
+        </div>
+
+        <!-- Our Journey Section -->
+        <div class="journey-section">
+            <h2 class="journey-title">Our Beautiful Journey Together 💕💗</h2>
+            <p class="journey-subtitle">Every moment with you is a memory worth cherishing forever</p>
+            
+            <!-- Dynamic Database Timeline Container -->
+            <div class="timeline" id="timeline-container">
+                <!-- Database items will render dynamically here -->
+            </div>
+
+            <!-- Forever Message (Moved safely outside the dynamic loop but inside the journey section) -->
+            <div class="forever-message">
+                <div class="forever-content">
+                    <h3>💕 Our Forever Journey 💕</h3>
+                    <p>This timeline is just the beginning... I want it to grow forever, filled with countless more beautiful moments, adventures, and memories.</p>
+                    <p>As long as we're together, every day will be a new chapter in our endless story of love.</p>
+                    <p class="forever-promise">May we both live happily ever after, hand in hand, heart to heart, forever and always. 💖✨</p>
+                    <h2 class="rashi-love">I loveeee youuuuu sooo mucchhh, my Rashi, my LOVE.💗💕</h2>
+                    <div class="infinity-symbol">∞</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Lightbox for full-size images -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Full size image" id="lightbox-img">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <div class="popup" id="popup">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2 style="font-family: 'Dancing Script', cursive; background: linear-gradient(135deg, #d4145a 0%, #fbb034 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 25px; font-size: clamp(1.8rem, 5vw, 2.8rem);">You Are My Forever!✨</h2>   
+        <p style="color: #6b4158; font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.8; margin-bottom: 15px;">
+            <strong style="color: #d4145a;">My Dearest Love,</strong><br>
+            In a world temporary world, <strong>I want to be your forever</strong>. ✨<br>
+            I want to cherish every moment of my life <strong>with you, forever</strong>.💕<br>
+            <br>
+            Every song reminds me of <strong>you</strong>🥹✨.<br>
+            Every romantic movie reminds me of <strong>you</strong>🧿💝💝.<br>
+            Every heartbeat misses <strong>you</strong>.😭😭
+            
+            <strong style="font-size: clamp(1.1rem, 3.5vw, 1.4rem); color: #d4145a; display: block; margin-top: 20px; font-family: 'Playfair Display', serif;">
+                Happy Valentine's Day, My Rashiii❤️🌹<br>
+                I loveee youuuu so soo soo Muchhhhhh ,My red string is tied to you🌙💫
+            </strong>
+        </p>
+    </div>
+
+    <!-- Original UI/Animation Script -->
+    <script src="script.js"></script>
+
+    <!-- NEW Database Fetch Script -->
+    <script>
+        async function loadTimelineFromDatabase() {
+            try {
+                // Fetch data from your local Node.js backend
+                const response = await fetch('http://localhost:5000/api/memories');
+                const memories = await response.json();
+                
+                const container = document.getElementById('timeline-container');
+                container.innerHTML = ''; 
+
+                memories.forEach(memory => {
+                    let mediaHtml = '<div class="media-container">';
+                    
+                    // 1. Add Images
+                    if (memory.images && memory.images.length > 0) {
+                        memory.images.forEach(imgUrl => {
+                            mediaHtml += `<img src="${imgUrl}" alt="Memory image" class="timeline-img" onclick="openLightbox(this)">`;
+                        });
+                    }
+                    
+                    // 2. Add Videos
+                    if (memory.videos && memory.videos.length > 0) {
+                        memory.videos.forEach(vidUrl => {
+                            mediaHtml += `
+                                <div class="video-container"> 
+                                    <video src="${vidUrl}" loop class="timeline-video" preload="metadata" playsinline muted></video>
+                                    <div class="video-play-button" onclick="playVideo(this)">▶</div>
+                                </div>
+                            `;
+                        });
+                    }
+                    mediaHtml += '</div>';
+
+                    // 3. Build the timeline card
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'timeline-item';
+                    itemDiv.setAttribute('data-aos', 'fade-up'); 
+                    
+                    itemDiv.innerHTML = `
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">${memory.date}</div>
+                            <h3>${memory.title}</h3>
+                            ${(memory.images.length > 0 || memory.videos.length > 0) ? mediaHtml : ''}
+                            <p>${memory.description}</p>
+                            <small style="color: #d4145a; font-weight: bold; display: block; margin-top: 10px; text-transform: italic;">✨ Added by: ${memory.uploadedBy}</small>
+                        </div>
+                    `;
+                    
+                    container.appendChild(itemDiv);
+                    
+                    // Add a visual spacer between items
+                    const spacer = document.createElement('br');
+                    container.appendChild(spacer);
+                    container.appendChild(spacer.cloneNode());
+                });
+
+                // Re-trigger scroll and video observers from your script.js for the newly injected items
+                if(typeof revealTimeline === 'function') revealTimeline();
+                if(typeof setupVideoObserver === 'function') setupVideoObserver();
+
+            } catch (error) {
+                console.error('Failed to load database timeline:', error);
+                document.getElementById('timeline-container').innerHTML = '<p style="text-align:center; color:red; padding: 20px; font-weight: bold;">Ensure your backend server is running! 💖</p>';
+            }
+        }
+
+        // Run this function the moment the page loads
+        window.addEventListener('DOMContentLoaded', loadTimelineFromDatabase);
+    </script>
+</body>
+</html>
